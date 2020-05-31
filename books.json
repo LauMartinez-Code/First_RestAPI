@@ -1,0 +1,27 @@
+[
+    {
+        "id": "1",
+        "name": "Castigo y crimen",
+        "authorId": "1"
+    },
+    {
+        "id": "2",
+        "name": "Mi mitad oscura",
+        "authorId": "2"
+    },
+    {
+        "id": "3",
+        "name": "Desayuno en jupiter",
+        "authorId": "3"
+    },
+    {
+        "id": "4",
+        "name": "La guerra del fin del Mundo",
+        "authorId": "2"
+    },
+    {
+        "id": "5",
+        "name": "Todos tus nombres",
+        "authorId": "3"
+    } 
+]   
