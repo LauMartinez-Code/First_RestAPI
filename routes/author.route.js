@@ -2,6 +2,7 @@ const { Router } = require('express');
 const router = Router();
 const _ = require('lodash');
 const authors = require('../authors.json');
+const authorDomain = require('../domain/author.domain');
 
 
 router.get('/authors', (req, res) => {
@@ -10,46 +11,40 @@ router.get('/authors', (req, res) => {
 
 
 router.post('/authors', (req, res) => {
-    const {id, name, lastname} = req.body;
 
-    if (id && name && lastname) {
-        const newAuthor = req.body;
-        authors.push(newAuthor);
-        res.json({'added': 'ok'});         
-    } else {
-        res.status(400).json({ 'statusCode': 'Bad Request'});
-    }
+    const response = authorDomain.checkBeforePOST(authors, req.body);
+
+    res.status(response[0]).json(response[1]);
+
 });
 
 router.delete('/authors/:id', (req, res) => {
-    console.log(req.params);
     const id = req.params.id;
-    
-    _.remove(authors, (author) => {
-        return author.id == id;
-    });
 
-    res.json(authors);
+    if (!isNaN(id)) {   //verifica tener un parametro valido
+        (async function() {
+            const response = await authorDomain.checkBeforeDELETE(authors, id);
+    
+            res.status(response[0]).json(response[1]); 
+        })();
+
+    }
+    else{ res.status(404).json({'statusCode': 'Error 404! Cannot DELETE /api/authors/ Page not found :( Try another Id'});}
 });
 
 router.put('/authors/:id', (req, res) => {
     const id = req.params.id;
-    const {name, lastname} = req.body;
 
-    _.each(authors, (author) => {
-        if (author.id == id) {
-            author.id = id;
-            author.name = name;
-            author.lastname = lastname;
-        }
-    });
-    res.json({'modified': 'ok'});
+    if (!isNaN(id)) {
+        (async function() {
+            const response = await authorDomain.checkBeforePUT(authors, id, req.body);
+    
+            res.status(response[0]).json(response[1]); 
+        })();
+    }
+    else{
+        res.status(404).json({'statusCode': 'Error 404! Cannot PUT /api/authors/ Page not found :( Try another Id'});
+    }
 });
 
 module.exports = router;
-
-
-/*
-json de prueba q se envia con post/put desde postman
-
-*/
