@@ -11,7 +11,7 @@
   "author": "Lautaro Martinez",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.0.0",
+    "express": "^5.2.1",
     "lodash": "^4.17.21",
     "morgan": "^1.10.1",
     "node-fetch": "^2.6.7"
